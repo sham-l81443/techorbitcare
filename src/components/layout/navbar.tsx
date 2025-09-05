@@ -1,5 +1,5 @@
 "use client";
-import { Menu, Smartphone, MapPin, Clock, Navigation } from "lucide-react";
+import { Menu, Smartphone, MapPin, Navigation } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,7 @@ import Image from "next/image";
 import { Whatsapp } from "@/assets/svg";
 
 // VisuallyHidden component for accessibility
-const VisuallyHidden = ({ children, ...props }: { children: React.ReactNode;[key: string]: any }) => (
+const VisuallyHidden = ({ children, ...props }: { children: React.ReactNode } & React.HTMLAttributes<HTMLSpanElement>) => (
     <span
         style={{
             position: 'absolute',
