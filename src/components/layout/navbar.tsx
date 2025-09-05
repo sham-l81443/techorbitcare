@@ -120,6 +120,18 @@ const Navbar = () => {
                 Skip to main content
             </a>
 
+            {/* Promotional Banner */}
+            <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white text-center py-1.5 px-2 sm:px-4">
+                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 sm:space-x-2">
+                    <span className="text-[0.75rem] sm:text-[0.8125rem] font-medium">
+                        🎉 Get ₹200 OFF on your first mobile repair service!
+                    </span>
+                    <span className="text-[0.75rem] sm:text-[0.8125rem] bg-white/20 px-2 py-0.5 sm:py-1 rounded-full">
+                        Min. ₹500
+                    </span>
+                </div>
+            </div>
+
             {/* Structured Data for SEO */}
             <script
                 type="application/ld+json"
@@ -233,6 +245,7 @@ const Navbar = () => {
                                         </Button>
                                     );
                                 })}
+                                <Button className="text-[0.8125rem] px-3 rounded-full h-8 font-medium cursor-pointer">LOGIN</Button>
                             </div>
 
                             {/* Mobile Drawer */}
