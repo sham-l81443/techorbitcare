@@ -16,8 +16,28 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "TechOrbitCare - Healthcare Management Platform",
-  description: "A comprehensive healthcare management platform for modern medical practices",
+  title: "TechOrbitCare - Mobile Phone Repair Shop | Taliparamba, Kerala",
+  description: "Professional mobile phone repair services in Taliparamba, Kerala. 15+ years experience repairing smartphones, keypad phones, and all mobile devices. Located near Court Road, Taliparamba.",
+  keywords: "mobile phone repair, smartphone repair, phone repair Taliparamba, Kerala mobile repair, TechorbitCare, mobile service center, phone screen repair, mobile repair shop",
+  authors: [{ name: "TechOrbitCare" }],
+  creator: "TechOrbitCare",
+  publisher: "TechOrbitCare",
+  robots: "index, follow",
+  openGraph: {
+    title: "TechOrbitCare - Mobile Phone Repair Shop | Taliparamba, Kerala",
+    description: "Professional mobile phone repair services in Taliparamba, Kerala. 15+ years experience repairing smartphones, keypad phones, and all mobile devices.",
+    type: "website",
+    locale: "en_IN",
+    siteName: "TechOrbitCare",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TechOrbitCare - Mobile Phone Repair Shop",
+    description: "Professional mobile phone repair services in Taliparamba, Kerala. 15+ years experience.",
+  },
+  alternates: {
+    canonical: "https://techorbitcare.com",
+  },
 };
 
 export default function RootLayout({
