@@ -1,67 +1,97 @@
 import Link from 'next/link';
 import React from 'react';
-import { MapPin } from 'lucide-react';
+import {  MapPinned } from 'lucide-react';
+import { GoogleMapsIcon } from '@/assets/svg';
+import Image from 'next/image';
+const commonClass = "bg-gradient-to-r from-blue-500 to-blue-500/40 absolute -z-10 rounded-4xl"
+const mobileClass = "h-[500px] w-[400px]  -top-[100px] -right-[150px] rotate-[-150deg] rounded-4xl"
+const desktopClass = "lg:h-[1000px] lg:w-[1000px]  lg:-top-[400px] lg:-right-[300px] lg:rotate-[-150deg]"
 
-const Hero = () => {
-
+// Background component for the hero section
+const HeroBackground = () => {
     return (
-        <section className="pt-16 md:pt-32 pb-20 px-6 bg-gradient-to-b from-gray-50 to-white">
-            <div className="max-w-4xl mx-auto text-center">
-                <h1 className="text-5xl md:text-7xl font-light text-black mb-6 leading-tight">
-                    {'Hassle-Free Mobile Repair'}
-                    <br />
-                    <span className="font-semibold">{' We’ve Got You Covered'}</span>
-                </h1>
+        <>
+            <div
+                className="absolute inset-0 -z-10"
+                style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23F9FAFB' strokeWidth='0.4'%3E%3Cpath d='M0 0h12v12H0z'/%3E%3C/g%3E%3C/svg%3E")`,
+                }}
+            />
+            <div className={`${commonClass} ${mobileClass} ${desktopClass} `}></div>
+        </>
+    );
+};
 
-                <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-                    {'Trusted by hundreds of customers for safe, reliable, and affordable mobile repair'}
-                </p>
+// Header component for the main title and subtitle
+const HeroHeader = () => {
+    return (
+        <>
+            <h1 className="text-5xl md:text-7xl font-light text-black mb-6 leading-tight">
+                {'Hassle-Free Mobile Repair'}
+                <br />
+                <span className="font-semibold">{'We\'ve Got You Covered'}</span>
+            </h1>
 
-                {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 max-w-2xl mx-auto">
-                    {[
-                        "5000+ Repairs Completed",
-                        "Same Day Service",
-                        "Lifetime Warranty"
-                    ].map((point, index) => (
-                        <div key={index} className="flex items-center space-x-2">
-                            <CheckCircle className="w-5 h-5 text-black/60" />
-                            <span className="text-black/60 font-medium">{point}</span>
-                        </div>
-                    ))}
-                </div> */}
+            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
+                {'Trusted by hundreds of customers for safe, reliable, and affordable mobile repair'}
+            </p>
+        </>
+    );
+};
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <Link href="/complaints" className="w-full md:w-auto bg-black text-white px-8 py-2 border-2 border-black md:py-4 rounded-full text-lg font-medium hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                        {'Book Now'}
-                    </Link>
-                    <Link href={`tel:${process.env.NEXT_PUBLIC_CALL_NUMBER || "+9020554466"}`} className="w-full md:w-auto border-2 border-black text-black px-8 py-2 md:py-4 rounded-full text-lg font-medium hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105">
-                        {'Call Us Now'}
-                    </Link>
-                    <Link target='_blank' href={`https://www.google.com/maps/place/Techorbit/@12.0373973,75.3622677,20.25z/data=!4m6!3m5!1s0x3ba43f9b82d9de85:0xdefe099aeb548748!8m2!3d12.0376313!4d75.3624648!16s%2Fg%2F11g1k8bwqk?entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D`} className="w-full md:w-auto border-2 border-black text-black px-8 py-2 md:py-4 rounded-full text-lg font-medium hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
-                       <MapPin className='w-5 h-5' /> {'Show Us On Map'}
-                    </Link>
-                </div>
-                {/* <div className='mt-5'>
-                    📍 123 Tech Street, Electronics Hub, Mumbai | ⏰ Open Mon-Sat 9AM-8PM
-                </div> */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20 mt-20 max-w-4xl mx-auto">
-                    <div className="text-center">
-                        <div className="text-4xl md:text-5xl font-light text-foreground mb-2">2.5K</div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Repairs Complete</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-4xl md:text-5xl font-light text-foreground mb-2">1.2K</div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Happy Customers</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-4xl md:text-5xl font-light text-foreground mb-2">5</div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Years Experience</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-4xl md:text-5xl font-light text-foreground mb-2">4.8</div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Customer Rating</div>
-                    </div>
-                </div>
+// Actions component for the action buttons
+const HeroActions = () => {
+    return (
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link href="/complaints" className="w-full md:w-auto bg-black text-white px-8 py-2 border-2 border-black  rounded-full text-lg font-medium hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                {'Book Now'}
+            </Link>
+            <Link href={`tel:${process.env.NEXT_PUBLIC_CALL_NUMBER || "+9020554466"}`} className="w-full md:w-auto border-2 border-black text-black px-8 py-2 rounded-full text-lg font-medium hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105">
+                {'Call Us Now'}
+            </Link>
+            <Link target='_blank' href={`https://www.google.com/maps/place/Techorbit/@12.0373973,75.3622677,20.25z/data=!4m6!3m5!1s0x3ba43f9b82d9de85:0xdefe099aeb548748!8m2!3d12.0376313!4d75.3624648!16s%2Fg%2F11g1k8bwqk?entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D`} className="w-full md:w-auto border-2 border-black text-black px-8 py-2  rounded-full text-lg font-medium hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                <Image src={GoogleMapsIcon} alt='Google Maps' className='w-6 h-6' /> {'Show Us On Map'}
+            </Link>
+        </div>
+    );
+};
+
+// Stats component for the statistics grid
+const HeroStats = () => {
+    return (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20 mt-20 max-w-4xl mx-auto">
+            <div className="text-center">
+                <div className="text-3xl md:text-5xl font-light text-foreground mb-2">2.5K</div>
+                <div className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-wider">Repairs Complete</div>
+            </div>
+            <div className="text-center">
+                <div className="text-3xl md:text-5xl font-light text-foreground mb-2">1.2K</div>
+                <div className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-wider">Happy Customers</div>
+            </div>
+            <div className="text-center">
+                <div className="text-3xl md:text-5xl font-light text-foreground mb-2">5</div>
+                <div className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-wider">Years Experience</div>
+            </div>
+            <div className="text-center">
+                <div className="text-3xl md:text-5xl font-light text-foreground mb-2">4.8</div>
+                <div className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-wider">Customer Rating</div>
+            </div>
+        </div>
+    );
+};
+
+
+
+// Main Hero component that uses all the smaller components
+const Hero = () => {
+    return (
+        <section className="pt-16 md:pt-32 lg:pb-10 px-6 bg-white -z-20 relative overflow-hidden ">
+            <HeroBackground />
+            <div className="max-w-4xl mx-auto text-center !z-10">
+                
+                <HeroHeader />
+                <HeroActions />
+                <HeroStats />
             </div>
         </section>
     );
