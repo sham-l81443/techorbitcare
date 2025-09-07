@@ -1,5 +1,5 @@
 "use client";
-import { Menu, Smartphone, MapPin, Navigation } from "lucide-react";
+import { Menu, Smartphone, MapPin } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -135,7 +135,9 @@ const NavbarActions = ({ actionButtons }: { actionButtons: ActionButton[] }) => 
                     </Button>
                 );
             })}
-            <Button className="text-[0.8125rem] px-3 rounded-full h-8 font-medium cursor-pointer">LOGIN</Button>
+            <Button asChild className="text-[0.8125rem] px-3 rounded-full h-8 font-medium cursor-pointer">
+                <Link href="/login">LOGIN</Link>
+            </Button>
         </div>
     );
 };
@@ -191,6 +193,14 @@ const NavbarMobile = ({ navigation, actionButtons, isActive }: { navigation: Nav
                                     </Link>
                                 </DrawerClose>
                             ))}
+                            <DrawerClose asChild>
+                                <Link
+                                    href="/login"
+                                    className="block px-3 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-muted-foreground hover:text-foreground hover:bg-accent"
+                                >
+                                    Login
+                                </Link>
+                            </DrawerClose>
                         </nav>
                     </div>
 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import {  MapPinned } from 'lucide-react';
+// import {  MapPinned } from 'lucide-react';
 import { GoogleMapsIcon } from '@/assets/svg';
 import Image from 'next/image';
 const commonClass = "bg-gradient-to-r from-blue-500 to-blue-500/40 absolute -z-10 rounded-4xl"
@@ -8,7 +8,7 @@ const mobileClass = "h-[500px] w-[400px]  -top-[100px] -right-[150px] rotate-[-1
 const desktopClass = "lg:h-[1000px] lg:w-[1000px]  lg:-top-[400px] lg:-right-[300px] lg:rotate-[-150deg]"
 
 // Background component for the hero section
-const HeroBackground = () => {
+export const HeroBackground = () => {
     return (
         <>
             <div
