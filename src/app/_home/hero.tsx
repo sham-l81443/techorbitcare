@@ -3,33 +3,19 @@ import React from 'react';
 // import {  MapPinned } from 'lucide-react';
 import { GoogleMapsIcon } from '@/assets/svg';
 import Image from 'next/image';
-const commonClass = "bg-gradient-to-r from-blue-500 to-blue-500/40 absolute -z-10 rounded-4xl"
-const mobileClass = "h-[500px] w-[400px]  -top-[100px] -right-[150px] rotate-[-150deg] rounded-4xl"
-const desktopClass = "lg:h-[1000px] lg:w-[1000px]  lg:-top-[400px] lg:-right-[300px] lg:rotate-[-150deg]"
+import { HeroBackground } from './hero-background';
 
 // Background component for the hero section
-export const HeroBackground = () => {
-    return (
-        <>
-            <div
-                className="absolute inset-0 -z-10"
-                style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23F9FAFB' strokeWidth='0.4'%3E%3Cpath d='M0 0h12v12H0z'/%3E%3C/g%3E%3C/svg%3E")`,
-                }}
-            />
-            <div className={`${commonClass} ${mobileClass} ${desktopClass} `}></div>
-        </>
-    );
-};
+
 
 // Header component for the main title and subtitle
 const HeroHeader = () => {
     return (
         <>
-            <h1 className="text-5xl md:text-7xl font-light text-black mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-extralight text-black mb-6 leading-tight">
                 {'Hassle-Free Mobile Repair'}
                 <br />
-                <span className="font-semibold">{'We\'ve Got You Covered'}</span>
+                <span className="font-semibold text-6xl">{'We\'ve Got You Covered'}</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
@@ -85,10 +71,9 @@ const HeroStats = () => {
 // Main Hero component that uses all the smaller components
 const Hero = () => {
     return (
-        <section className="pt-16 md:pt-32 lg:pb-10 px-6 bg-white -z-20 relative overflow-hidden ">
+        <section className="lg:pb-10 px-6 bg-white -z-20 relative overflow-hidden ">
             <HeroBackground />
-            <div className="max-w-4xl mx-auto text-center !z-10">
-                
+            <div className="pt-16 lg:pt-32 max-w-4xl mx-auto text-center !z-10">
                 <HeroHeader />
                 <HeroActions />
                 <HeroStats />

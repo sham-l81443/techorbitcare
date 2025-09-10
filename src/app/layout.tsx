@@ -6,6 +6,8 @@ import ServiceWorkerRegistration from "@/components/service-worker-registration"
 import StructuredData from "@/components/structured-data";
 import GoogleAnalytics from "@/components/google-analytics";
 import PerformanceOptimizer from "@/components/performance-optimizer";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { QueryProvider } from "@/components/providers/QueryProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -124,15 +126,19 @@ export default function RootLayout({
         <meta property="og:image" content="https://techorbitcare.com/icons/icon-192x192.png" />
       </head>
       <body
-        className={`${inter.variable} ${poppins.variable} antialiased pt-12`}
+        className={`${inter.variable} ${poppins.variable} antialiased`}
       >
-        <GoogleAnalytics GA_TRACKING_ID={process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'} />
-        <StructuredData type="localBusiness" />
-        <StructuredData type="organization" />
-        {children}
-        <ServiceWorkerRegistration />
-        {/* <PWAStatusIndicator /> */}
-        <PWAInstallPrompt />
+        <QueryProvider>
+          <AuthProvider>
+            <GoogleAnalytics GA_TRACKING_ID={process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'} />
+            <StructuredData type="localBusiness" />
+            <StructuredData type="organization" />
+            {children}
+            <ServiceWorkerRegistration />
+            {/* <PWAStatusIndicator /> */}
+            <PWAInstallPrompt />
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );

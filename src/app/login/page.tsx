@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -15,6 +16,9 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import { Eye, EyeOff } from 'lucide-react';
+import { useLogin } from '@/hooks/useAuth';
+import { useAuthStore } from '@/hooks/useAuthStore';
 
 const commonClass = "bg-gradient-to-r from-blue-500 to-blue-500/40 absolute -z-10 rounded-4xl";
 const mobileClass = "h-[500px] w-[400px] -top-[100px] -right-[150px] rotate-[-150deg] rounded-4xl";
@@ -49,6 +53,19 @@ const LoginBackground = () => {
 };
 
 export default function LoginPage() {
+    const router = useRouter();
+    const [showPassword, setShowPassword] = useState(false);
+    const { isAuthenticated } = useAuthStore();
+    
+    const loginMutation = useLogin();
+
+    // Redirect to dashboard if already authenticated
+    React.useEffect(() => {
+        if (isAuthenticated) {
+            router.push('/dashboard');
+        }
+    }, [isAuthenticated, router]);
+
     const form = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -58,16 +75,13 @@ export default function LoginPage() {
         },
     });
 
-    const onSubmit = async (data: LoginFormData) => {
-        try {
-            // Handle login logic here
-            console.log('Login attempt:', data);
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            // Redirect or show success message
-        } catch (error) {
-            console.error('Login error:', error);
-        }
+    const onSubmit = (data: LoginFormData) => {
+        loginMutation.mutate(data, {
+            onSuccess: () => {
+                // Redirect to dashboard on successful login
+                router.push('/dashboard');
+            },
+        });
     };
 
     return (
@@ -122,12 +136,26 @@ export default function LoginPage() {
                                                         Password
                                                     </FormLabel>
                                                     <FormControl>
-                                                        <Input
-                                                            type="password"
-                                                            placeholder="Enter your password"
-                                                            className="h-12 text-base"
-                                                            {...field}
-                                                        />
+                                                        <div className="relative">
+                                                            <Input
+                                                                type={showPassword ? "text" : "password"}
+                                                                placeholder="Enter your password"
+                                                                className="h-12 text-base pr-10"
+                                                                {...field}
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setShowPassword(!showPassword)}
+                                                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+                                                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                                            >
+                                                                {showPassword ? (
+                                                                    <EyeOff className="h-5 w-5" />
+                                                                ) : (
+                                                                    <Eye className="h-5 w-5" />
+                                                                )}
+                                                            </button>
+                                                        </div>
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -164,17 +192,17 @@ export default function LoginPage() {
                                         
                                         <Button 
                                             type="submit" 
-                                            disabled={form.formState.isSubmitting}
+                                            disabled={loginMutation.isPending}
                                             className="w-full h-12 text-base font-medium bg-black hover:bg-gray-800 text-white disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
-                                            {form.formState.isSubmitting ? 'Signing In...' : 'Sign In'}
+                                            {loginMutation.isPending ? 'Signing In...' : 'Sign In'}
                                         </Button>
                                         
                                         <div className="text-center">
                                             <p className="text-sm text-gray-600">
                                                 Don&apos;t have an account?{' '}
                                                 <Link 
-                                                    href="/register" 
+                                                    href="/signup" 
                                                     className="text-blue-600 hover:text-blue-500 font-medium"
                                                 >
                                                     Sign up

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Menu, Smartphone, MapPin } from "lucide-react";
+import { Menu, Smartphone, MapPin, User, LogOut, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -12,9 +12,18 @@ import {
     DrawerClose,
     DrawerTitle,
 } from "@/components/ui/drawer";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+    DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import Applogo from "@/assets/images/app-logo.png";
 import Image from "next/image";
 import { GoogleMapsIcon, Whatsapp } from "@/assets/svg";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from 'sonner';
 
 // VisuallyHidden component for accessibility
 const VisuallyHidden = ({ children, ...props }: { children: React.ReactNode } & React.HTMLAttributes<HTMLSpanElement>) => (
@@ -52,7 +61,7 @@ const NavbarLogo = () => {
                 Techorbit{" "}
                 <span className="text-sm font-normal text-muted-foreground">care</span>
             </span>
-            </Link>
+        </Link>
     );
 };
 
@@ -111,9 +120,16 @@ const NavbarNavigation = ({ navigation, isActive }: { navigation: NavigationItem
 
 // Action buttons component for desktop
 const NavbarActions = ({ actionButtons }: { actionButtons: ActionButton[] }) => {
+    const { user, logout } = useAuth();
+
+    const handleLogout = () => {
+        logout();
+        toast.success('Logged out successfully!');
+    };
+
     return (
         <div className="hidden md:flex items-center space-x-3">
-            {actionButtons.map((button) => {
+            {!user && actionButtons.map((button) => {
                 const IconComponent = button.icon;
                 return (
                     <Button
@@ -140,9 +156,53 @@ const NavbarActions = ({ actionButtons }: { actionButtons: ActionButton[] }) => 
                     </Button>
                 );
             })}
-            <Button asChild className="text-[0.8125rem] px-3 rounded-full h-8 font-medium cursor-pointer">
-                <Link href="/login">LOGIN</Link>
-            </Button>
+
+            {user ? (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="text-[0.8125rem] px-3 rounded-full h-8 font-medium cursor-pointer">
+                            <User className="w-4 h-4 mr-2" />
+                            {user?.name || 'User'}
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56">
+                        <DropdownMenuItem className="flex flex-col items-start">
+                            <span className="font-medium">{user?.name || 'User'}</span>
+                            <span className="text-sm text-muted-foreground">{user?.email || 'user@example.com'}</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+
+                        {user?.role === 'ADMIN' ? (
+                            <DropdownMenuItem asChild>
+                                <Link href="/dashboard" className="flex items-center">
+                                    <LayoutDashboard className="w-4 h-4 mr-2" />
+                                    Dashboard
+                                </Link>
+                            </DropdownMenuItem>
+                        ) : (
+                            <DropdownMenuItem asChild>
+                                <Link href="/dashboard" className="flex items-center">
+                                    <LayoutDashboard className="w-4 h-4 mr-2" />
+                                    Dashboard
+                                </Link>
+                            </DropdownMenuItem>
+                        )}
+                        <DropdownMenuItem onClick={handleLogout} className="text-gray-600">
+                            <LogOut className="w-4 h-4 mr-2" />
+                            Logout
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            ) : (
+                <div className="flex items-center space-x-2">
+                    <Button asChild variant="outline" className="text-[0.8125rem] px-3 rounded-full h-8 font-medium cursor-pointer">
+                        <Link href="/signup">SIGN UP</Link>
+                    </Button>
+                    <Button asChild className="text-[0.8125rem] px-3 rounded-full h-8 font-medium cursor-pointer">
+                        <Link href="/login">LOGIN</Link>
+                    </Button>
+                </div>
+            )}
         </div>
     );
 };
@@ -150,15 +210,15 @@ const NavbarActions = ({ actionButtons }: { actionButtons: ActionButton[] }) => 
 const HeroLocation = () => {
     return (
         <Link target='_blank' href={`https://www.google.com/maps/place/Techorbit/@12.0373973,75.3622677,20.25z/data=!4m6!3m5!1s0x3ba43f9b82d9de85:0xdefe099aeb548748!8m2!3d12.0376313!4d75.3624648!16s%2Fg%2F11g1k8bwqk?entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D`} className="text-center flex gap-2 ">
-        <Image src={GoogleMapsIcon} alt='Google Maps' className='w-4 h-4' />
-       </Link>
+            <Image src={GoogleMapsIcon} alt='Google Maps' className='w-4 h-4' />
+        </Link>
     );
 };
 
 
 const WhatsappIcon = () => {
     return (
-        <Image src={Whatsapp} alt="WhatsApp" width={20} height={20}  />
+        <Image src={Whatsapp} alt="WhatsApp" width={20} height={20} />
     );
 };
 
@@ -172,26 +232,37 @@ const CallNow = () => {
 
 // Mobile navigation drawer component
 const NavbarMobile = ({ navigation, actionButtons, isActive }: { navigation: NavigationItem[], actionButtons: ActionButton[], isActive: (path: string) => boolean }) => {
+    const { user, logout } = useAuth();
+
+    const handleLogout = () => {
+        logout();
+        toast.success('Logged out successfully!');
+    };
+
     return (
         <div className="md:hidden">
             <Drawer direction="bottom">
-                <div className="flex items-center gap-3">
-                <CallNow />
-                <WhatsappIcon />
-                <HeroLocation />
-                <DrawerTrigger asChild>
-                    
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        aria-label="Open mobile navigation menu"
-                        aria-expanded="false"
-                        aria-controls="mobile-navigation"
-                    >
-                        <Menu className="w-5 h-5" />
-                        <span className="sr-only">Menu</span>
-                    </Button>
-                </DrawerTrigger>
+                <div className="flex items-center gap-3 ">
+                    {
+                        !user && <>
+                            <CallNow />
+                            <WhatsappIcon />
+                            <HeroLocation />
+                        </>
+                    }
+                    <DrawerTrigger asChild>
+
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            aria-label="Open mobile navigation menu"
+                            aria-expanded="false"
+                            aria-controls="mobile-navigation"
+                        >
+                            <Menu className="w-5 h-5" />
+                            <span className="sr-only">Menu</span>
+                        </Button>
+                    </DrawerTrigger>
                 </div>
                 <DrawerContent className="min-h-[92vh] overflow-hidden flex flex-col bg-white" id="mobile-navigation" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
                     <VisuallyHidden>
@@ -215,14 +286,86 @@ const NavbarMobile = ({ navigation, actionButtons, isActive }: { navigation: Nav
                                     </Link>
                                 </DrawerClose>
                             ))}
-                            <DrawerClose asChild>
-                                <Link
-                                    href="/login"
-                                    className="block px-3 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-muted-foreground hover:text-foreground hover:bg-accent"
-                                >
-                                    Login
-                                </Link>
-                            </DrawerClose>
+                            {user ? (
+                                <>
+                                    <div className="px-3 py-2 border-b border-gray-200 mb-2">
+                                        <div className="flex items-center space-x-2">
+                                            <User className="w-4 h-4 text-muted-foreground" />
+                                            <div>
+                                                <p className="text-sm font-medium">{user?.name || 'User'}</p>
+                                                <p className="text-xs text-muted-foreground">{user?.email || 'user@example.com'}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* <DrawerClose asChild>
+                                        <Link
+                                            href="/dashboard"
+                                            className="block px-3 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-muted-foreground hover:text-foreground hover:bg-accent"
+                                        >
+                                            <User className="w-4 h-4 inline mr-2" />
+                                            Dashboard
+                                        </Link>
+                                    </DrawerClose> */}
+                                    {/* <DrawerClose asChild>
+                                        <Link
+                                            href="/coupons"
+                                            className="block px-3 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-muted-foreground hover:text-foreground hover:bg-accent"
+                                        >
+                                            <Gift className="w-4 h-4 inline mr-2" />
+                                            My Coupons
+                                        </Link>
+                                    </DrawerClose> */}
+                                    {user?.role === 'ADMIN' ? (
+                                        <DrawerClose asChild>
+                                            <Link
+                                                href="/dashboard"
+                                                className="block px-3 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-muted-foreground hover:text-foreground hover:bg-accent"
+                                            >
+                                                <LayoutDashboard className="w-4 h-4 inline mr-2" />
+                                                Dashboard
+                                            </Link>
+                                        </DrawerClose>
+                                    ) :
+                                        <DrawerClose asChild>
+                                            <Link
+                                                href="/dashboard"
+                                                className="block px-3 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-muted-foreground hover:text-foreground hover:bg-accent"
+                                            >
+                                                <LayoutDashboard className="w-4 h-4 inline mr-2" />
+                                                Dashboard
+                                            </Link>
+                                        </DrawerClose>
+                                    }
+                                    <DrawerClose asChild>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="block w-full text-left px-3 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+                                        >
+                                            <LogOut className="w-4 h-4 inline mr-2" />
+                                            Logout
+                                        </button>
+                                    </DrawerClose>
+                                </>
+                            ) : (
+                                <>
+                                    <DrawerClose asChild>
+                                        <Link
+                                            href="/signup"
+                                            className="block px-3 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-muted-foreground hover:text-foreground hover:bg-accent"
+                                        >
+                                            Sign Up
+                                        </Link>
+                                    </DrawerClose>
+                                    <DrawerClose asChild>
+                                        <Link
+                                            href="/login"
+                                            className="block px-3 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-muted-foreground hover:text-foreground hover:bg-accent"
+                                        >
+                                            Login
+                                        </Link>
+                                    </DrawerClose>
+                                </>
+                            )}
                         </nav>
                     </div>
 
@@ -233,7 +376,7 @@ const NavbarMobile = ({ navigation, actionButtons, isActive }: { navigation: Nav
                                 <span className="text-sm font-medium">Location</span>
                             </div>
                             <p className="text-sm text-muted-foreground">
-                               {process.env.NEXT_PUBLIC_ADDRESS || "Near Police Station, Court Road, Taliparamba, Kerala"}
+                                {process.env.NEXT_PUBLIC_ADDRESS || "Near Police Station, Court Road, Taliparamba, Kerala"}
                             </p>
                         </div>
                         <div className="flex justify-between space-x-2">
@@ -262,18 +405,18 @@ const NavbarMobile = ({ navigation, actionButtons, isActive }: { navigation: Nav
                                                 rel={button.external ? "noopener noreferrer" : undefined}
                                                 className="flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                                                 aria-label={button.ariaLabel || button.name}
-                                                >
-                                                    {button.name === "WhatsApp" ? (
+                                            >
+                                                {button.name === "WhatsApp" ? (
                                                     <Image src={Whatsapp} alt="WhatsApp" width={20} height={20} className="mr-2" />
-                                                    
+
                                                 ) :
-                                               
-                                                button.name === "Location" ? (
-                                                    <Image src={GoogleMapsIcon} alt="Location" width={20} height={20} className="mr-2" />
-                                                ) :
-                                                 (
-                                                    <IconComponent className="w-5 h-5 mr-2" />
-                                                )}
+
+                                                    button.name === "Location" ? (
+                                                        <Image src={GoogleMapsIcon} alt="Location" width={20} height={20} className="mr-2" />
+                                                    ) :
+                                                        (
+                                                            <IconComponent className="w-5 h-5 mr-2" />
+                                                        )}
                                                 <span className="text-xs">
                                                     {button.mobileText}
                                                 </span>
@@ -284,7 +427,7 @@ const NavbarMobile = ({ navigation, actionButtons, isActive }: { navigation: Nav
                             })}
                         </div>
                     </div>
-                    
+
                     {/* Footer */}
                     <div className="px-4 py-3 border-t bg-muted/30">
                         <p className="text-xs text-muted-foreground text-center">
@@ -392,7 +535,7 @@ const NavbarStructuredData = ({ businessInfo }: { businessInfo: BusinessInfo }) 
     );
 };
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn = false }: { isLoggedIn: boolean }) => {
     const location = usePathname();
 
     const navigation = [
@@ -494,14 +637,14 @@ const Navbar = () => {
 
             <header role="banner" className="z-50" key={location}>
                 <nav
-                    className="w-full bg-white border-b border-gray-50 fixed top-0 left-0 right-0 z-50"
+                    className="w-full bg-white    border-gray-50  z-50"
                     role="navigation"
-                    aria-label="Main navigation z-50"
+                    aria-label="Main navigation z-50 "
                 >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex justify-between items-center h-12">
+                        <div className="flex justify-between items-center h-12 ">
                             <NavbarLogo />
-                            <NavbarNavigation navigation={navigation} isActive={isActive} />
+                            {!isLoggedIn && <NavbarNavigation navigation={navigation} isActive={isActive} />}
                             <NavbarActions actionButtons={actionButtons} />
                             <NavbarMobile navigation={navigation} actionButtons={actionButtons} isActive={isActive} />
                         </div>
