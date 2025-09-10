@@ -1,4 +1,4 @@
 import Whatsapp from "./whatsapp.svg";
 import GoogleMapsIcon from "./googlemap.svg";
-
-export { Whatsapp, GoogleMapsIcon };
+import RepairIcon from "./repair-icon.png";
+export { Whatsapp, GoogleMapsIcon, RepairIcon };

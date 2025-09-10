@@ -11,6 +11,7 @@ import {
     DrawerClose,
     DrawerTitle,
 } from "@/components/ui/drawer";
+import Applogo from "@/assets/images/app-logo.png";
 import Image from "next/image";
 import { GoogleMapsIcon, Whatsapp } from "@/assets/svg";
 
@@ -40,10 +41,13 @@ const NavbarLogo = () => {
     return (
         <Link
             href="/"
-            className="flex flex-col justify-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md"
+            className="flex items-end justify-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md"
             aria-label="TechOrbitCare - Mobile Phone Repair Shop Homepage court road, Taliparamba, Kerala"
         >
-            <span className="text-xl font-semibold text-foreground">
+            <span>
+                <Image src={Applogo} alt="TechOrbitCare" className="w-8 h-8" />
+            </span>
+            <span className="text-xl font-semibold text-foreground ">
                 Techorbit{" "}
                 <span className="text-sm font-normal text-muted-foreground">care</span>
             </span>
@@ -144,9 +148,24 @@ const NavbarActions = ({ actionButtons }: { actionButtons: ActionButton[] }) => 
 
 const HeroLocation = () => {
     return (
-        <Link target='_blank' href={`https://www.google.com/maps/place/Techorbit/@12.0373973,75.3622677,20.25z/data=!4m6!3m5!1s0x3ba43f9b82d9de85:0xdefe099aeb548748!8m2!3d12.0376313!4d75.3624648!16s%2Fg%2F11g1k8bwqk?entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D`} className="text-center flex gap-2">
+        <Link target='_blank' href={`https://www.google.com/maps/place/Techorbit/@12.0373973,75.3622677,20.25z/data=!4m6!3m5!1s0x3ba43f9b82d9de85:0xdefe099aeb548748!8m2!3d12.0376313!4d75.3624648!16s%2Fg%2F11g1k8bwqk?entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D`} className="text-center flex gap-2 ">
         <Image src={GoogleMapsIcon} alt='Google Maps' className='w-4 h-4' />
        </Link>
+    );
+};
+
+
+const WhatsappIcon = () => {
+    return (
+        <Image src={Whatsapp} alt="WhatsApp" width={20} height={20}  />
+    );
+};
+
+const CallNow = () => {
+    return (
+        <Link href={`tel:${process.env.NEXT_PUBLIC_CALL_NUMBER || "+9020554466"}`}>
+            <Smartphone className="w-5 h-5 p-0.5" />
+        </Link>
     );
 };
 
@@ -155,7 +174,9 @@ const NavbarMobile = ({ navigation, actionButtons, isActive }: { navigation: Nav
     return (
         <div className="md:hidden">
             <Drawer direction="bottom">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
+                <CallNow />
+                <WhatsappIcon />
                 <HeroLocation />
                 <DrawerTrigger asChild>
                     
