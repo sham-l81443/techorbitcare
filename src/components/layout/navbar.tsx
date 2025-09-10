@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { Menu, Smartphone, MapPin } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -331,15 +332,57 @@ const NavbarStructuredData = ({ businessInfo }: { businessInfo: BusinessInfo }) 
                     },
                     "hasOfferCatalog": {
                         "@type": "OfferCatalog",
-                        "name": "Mobile Repair Services",
-                        "itemListElement": businessInfo.services.map((service: string, index: number) => ({
-                            "@type": "Offer",
-                            "itemOffered": {
-                                "@type": "Service",
-                                "name": service
+                        "name": "Mobile Repair Services Court Road Taliparamba",
+                        "itemListElement": [
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "Mobile Screen Repair Court Taliparamba"
+                                },
+                                "position": 1
                             },
-                            "position": index + 1
-                        }))
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "Phone Battery Replacement Near Police Station Taliparamba"
+                                },
+                                "position": 2
+                            },
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "Smartphone Software Repair Court Road Taliparamba"
+                                },
+                                "position": 3
+                            },
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "Mobile Water Damage Repair Court Taliparamba"
+                                },
+                                "position": 4
+                            },
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "iPhone Repair Near Police Station Taliparamba"
+                                },
+                                "position": 5
+                            },
+                            {
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": "Samsung Mobile Repair Court Road Taliparamba"
+                                },
+                                "position": 6
+                            }
+                        ]
                     },
                     "foundingDate": "2009",
                     "slogan": "Your trusted mobile repair partner for 15+ years"
@@ -449,9 +492,9 @@ const Navbar = () => {
             {/* Structured Data for SEO */}
             <NavbarStructuredData businessInfo={businessInfo} />
 
-            <header role="banner" className="z-50 ">
+            <header role="banner" className="z-50" key={location}>
                 <nav
-                    className="w-full bg-transparent backdrop-blur-md border-b border-border/40"
+                    className="w-full bg-white border-b border-gray-200 shadow-sm fixed top-0 left-0 right-0 z-50"
                     role="navigation"
                     aria-label="Main navigation z-50"
                 >

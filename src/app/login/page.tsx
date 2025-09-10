@@ -191,7 +191,7 @@ export default function LoginPage() {
                         <div className="hidden lg:flex items-center justify-end">
                             <div className="w-full max-w-lg">
                                 <div className="text-right">
-                                    <h2 className="text-6xl font-light text-gray-900/30 leading-tight">
+                                    <h2 className="text-6xl font-light text-gray-900/70 leading-tight">
                                         &quot;Your Trusted Mobile Repair Partner&quot;
                                     </h2>
                                 </div>

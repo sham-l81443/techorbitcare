@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 const StoreHours = () => {
   return (
@@ -53,9 +54,11 @@ const ContactInfo = () => {
 const StoreImage = () => {
   return (
     <div className="relative">
-      <img
+      <Image
         src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80"
         alt="Modern store interior"
+        width={800}
+        height={600}
         className="w-full h-full object-cover rounded-3xl shadow-2xl min-h-96"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-3xl"></div>

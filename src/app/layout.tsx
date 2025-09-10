@@ -2,8 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import PWAInstallPrompt from "@/components/pwa-install-prompt";
-import PWAStatusIndicator from "@/components/pwa-status-indicator";
 import ServiceWorkerRegistration from "@/components/service-worker-registration";
+import StructuredData from "@/components/structured-data";
+import GoogleAnalytics from "@/components/google-analytics";
+import PerformanceOptimizer from "@/components/performance-optimizer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -19,9 +21,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "TechOrbitCare - Mobile Phone Repair Shop | Taliparamba, Kerala",
-  description: "Professional mobile phone repair services in Taliparamba, Kerala. 15+ years experience repairing smartphones, keypad phones, and all mobile devices. Located near Court Road, Taliparamba.",
-  keywords: "mobile phone repair, smartphone repair, phone repair Taliparamba, Kerala mobile repair, TechorbitCare, mobile service center, phone screen repair, mobile repair shop",
+  title: "TechOrbitCare - Best Mobile Repair Shop Court Road Taliparamba | Phone Repair Near Police Station",
+  description: "Professional mobile phone repair services in Court Road Taliparamba, Kerala. Expert smartphone repair, screen replacement, battery repair, water damage recovery. Located near Police Station Court Taliparamba. Same-day repair, 15+ years experience.",
+  keywords: "mobile repair Court Road Taliparamba, phone repair Court Junction Taliparamba, smartphone repair near Police Station Court Taliparamba, best mobile repair shop Court Taliparamba, phone repair shop near Police Station Taliparamba, mobile service center Court Road Taliparamba, smartphone service center near Police Station Taliparamba, emergency mobile repair Court Taliparamba, urgent phone repair near Police Station Taliparamba, 24x7 mobile repair Court Road Taliparamba, doorstep phone repair Court Taliparamba, trusted mobile repair shop Court Taliparamba, broken mobile screen repair Court Taliparamba, cracked phone display replacement near Police Station Taliparamba, shattered smartphone glass repair Court Road Taliparamba, mobile screen replacement with warranty Court Taliparamba, cheap phone screen repair Court Taliparamba, original smartphone display replacement Court Road Taliparamba, mobile touch not working repair Court Taliparamba, phone display not working near Police Station Taliparamba, same day mobile screen replacement Court Taliparamba, phone fast charging repair Court Taliparamba, mobile not charging repair near Police Station Taliparamba, smartphone battery swelling issue Court Taliparamba, original mobile battery replacement Court Road Taliparamba, phone charging IC problem fix Taliparamba Court, mobile charging port loose repair Court Taliparamba, phone battery backup problem fix near Police Station Taliparamba, quick mobile charging repair Court Taliparamba, mobile software update Court Taliparamba, phone OS installation near Police Station Taliparamba, smartphone flashing unlocking Court Taliparamba, mobile hanging problem repair Court Road Taliparamba, phone virus removal near Police Station Taliparamba, smartphone data recovery Court Taliparamba, phone forgot password unlock Court Road Taliparamba, iPhone software repair Court Taliparamba, Android flashing near Police Station Taliparamba, mobile IC replacement Court Taliparamba, phone motherboard repair near Police Station Taliparamba, smartphone camera replacement Court Taliparamba, phone back glass replacement Court Road Taliparamba, mobile speaker repair near Police Station Taliparamba, phone mic repair Court Taliparamba, smartphone volume button repair Court Road Taliparamba, mobile power button repair near Police Station Taliparamba, phone vibration motor repair Court Taliparamba, smartphone charging IC replacement Court Road Taliparamba, mobile water damage repair Court Taliparamba, phone liquid damage repair near Police Station Taliparamba, smartphone dead phone service Court Taliparamba, quick water damage recovery Court Road Taliparamba, emergency mobile repair near Police Station Taliparamba, instant dead phone repair Court Taliparamba, iPhone repair Court Taliparamba, iPhone screen replacement near Police Station Taliparamba, Samsung mobile charging repair Court Road Taliparamba, Oppo phone battery replacement Court Taliparamba, Vivo smartphone software repair near Police Station Taliparamba, Realme cracked screen replacement Court Taliparamba, Redmi charging port repair Court Road Taliparamba, OnePlus broken display repair near Police Station Taliparamba, Motorola mobile repair Court Taliparamba, Nokia phone repair near Police Station Taliparamba",
   authors: [{ name: "TechOrbitCare" }],
   creator: "TechOrbitCare",
   publisher: "TechOrbitCare",
@@ -33,19 +35,41 @@ export const metadata: Metadata = {
     title: "TechOrbitCare",
   },
   openGraph: {
-    title: "TechOrbitCare - Mobile Phone Repair Shop | Taliparamba, Kerala",
-    description: "Professional mobile phone repair services in Taliparamba, Kerala. 15+ years experience repairing smartphones, keypad phones, and all mobile devices.",
+    title: "TechOrbitCare - Best Mobile Repair Shop Court Road Taliparamba | Phone Repair Near Police Station",
+    description: "Professional mobile phone repair services in Court Road Taliparamba, Kerala. Expert smartphone repair, screen replacement, battery repair, water damage recovery. Located near Police Station Court Taliparamba.",
     type: "website",
     locale: "en_IN",
     siteName: "TechOrbitCare",
+    url: "https://techorbitcare.com",
+    images: [
+      {
+        url: "https://techorbitcare.com/icons/icon-512x512.png",
+        width: 512,
+        height: 512,
+        alt: "TechOrbitCare Mobile Repair Shop Taliparamba",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TechOrbitCare - Mobile Phone Repair Shop",
-    description: "Professional mobile phone repair services in Taliparamba, Kerala. 15+ years experience.",
+    title: "TechOrbitCare - Best Mobile Repair Shop Court Road Taliparamba",
+    description: "Professional mobile phone repair services in Court Road Taliparamba, Kerala. Expert smartphone repair, screen replacement, battery repair.",
+    images: ["https://techorbitcare.com/icons/icon-512x512.png"],
+    creator: "@TechOrbitCare",
   },
   alternates: {
     canonical: "https://techorbitcare.com",
+  },
+  verification: {
+    google: "your-google-verification-code",
+  },
+  category: "Technology",
+  classification: "Mobile Phone Repair Services",
+  other: {
+    "geo.region": "IN-KL",
+    "geo.placename": "Taliparamba",
+    "geo.position": "12.0376313;75.3624648",
+    "ICBM": "12.0376313, 75.3624648",
   },
 };
 
@@ -65,6 +89,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <PerformanceOptimizer />
         <meta name="application-name" content="TechOrbitCare" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -99,11 +124,14 @@ export default function RootLayout({
         <meta property="og:image" content="https://techorbitcare.com/icons/icon-192x192.png" />
       </head>
       <body
-        className={`${inter.variable} ${poppins.variable} antialiased`}
+        className={`${inter.variable} ${poppins.variable} antialiased pt-12`}
       >
+        <GoogleAnalytics GA_TRACKING_ID={process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'} />
+        <StructuredData type="localBusiness" />
+        <StructuredData type="organization" />
         {children}
         <ServiceWorkerRegistration />
-        <PWAStatusIndicator />
+        {/* <PWAStatusIndicator /> */}
         <PWAInstallPrompt />
       </body>
     </html>
