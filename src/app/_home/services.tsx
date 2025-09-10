@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { 
-  Smartphone, 
-  Battery, 
-  Droplets, 
-  Camera, 
-  Wifi, 
+import {
+  Smartphone,
+  Battery,
+  Droplets,
+  Camera,
+  Wifi,
   Settings,
-  ArrowRight 
+  ArrowRight
 } from "lucide-react";
 import Image from "next/image";
 
@@ -23,7 +23,7 @@ const services = [
   },
   {
     icon: Battery,
-    title: "Battery Replacement", 
+    title: "Battery Replacement",
     description: "Restore your device's battery life with premium batteries",
     price: "Starting from ₹1,999",
     popular: false,
@@ -72,50 +72,54 @@ const Services = () => {
             Complete Mobile Repair Solutions
           </h2>
           <p className="text-large text-muted-foreground max-w-2xl mx-auto">
-            From screen replacements to complex motherboard repairs, 
+            From screen replacements to complex motherboard repairs,
             we handle all your mobile device needs with expertise.
           </p>
         </div>
-        
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div 
-              key={index} 
-              className="glass-card p-6 rounded-2xl group relative overflow-hidden"
+            <div
+              key={index}
+              className="glass-card p-6 rounded-2xl group relative overflow-hidden bg-gray-50"
             >
               {service.popular && (
                 <div className="absolute top-4 right-4 bg-primary text-primary-foreground text-xs px-3 py-1 rounded-full font-semibold">
                   Popular
                 </div>
               )}
-              
+
               {/* Service Image */}
               <div className="relative mb-6 rounded-xl overflow-hidden">
-                <Image 
-                  src={service.image} 
+                <Image
+                  src={service.image}
                   alt={service.title}
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
               </div>
-              
+
               <div className="space-y-6">
-                <div className="h-12 w-12 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <service.icon className="h-6 w-6 text-primary" />
-                </div>
-                
-                <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-foreground">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground">
-                    {service.description}
-                  </p>
-                  <p className="text-lg font-semibold text-primary">
+                <div className="flex gap-x-4">
+                  <div className="min-h-12 min-w-12 max-h-12 max-w-12 mt-0.5 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <service.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <div className="space-y-3">
+                    <h3 className="text-xl font-semibold text-foreground">
+                      {service.title}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {service.description}
+                    </p>
+                    {/* <p className="text-lg font-semibold text-primary">
                     {service.price}
-                  </p>
+                    </p> */}
+                  </div>
                 </div>
-                
+
+
+
+
                 <Button variant="ghost" className="w-full group-hover:bg-primary/5">
                   Learn More
                   <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -124,7 +128,7 @@ const Services = () => {
             </div>
           ))}
         </div>
-        
+
         <div className="text-center mt-12">
           <Button variant="default" size="lg">
             View All Services

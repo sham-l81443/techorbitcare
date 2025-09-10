@@ -494,7 +494,7 @@ const Navbar = () => {
 
             <header role="banner" className="z-50" key={location}>
                 <nav
-                    className="w-full bg-white border-b border-gray-200 shadow-sm fixed top-0 left-0 right-0 z-50"
+                    className="w-full bg-white border-b border-gray-50 fixed top-0 left-0 right-0 z-50"
                     role="navigation"
                     aria-label="Main navigation z-50"
                 >
