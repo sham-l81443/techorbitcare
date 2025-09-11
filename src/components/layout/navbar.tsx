@@ -637,7 +637,7 @@ const Navbar = ({ isLoggedIn = false }: { isLoggedIn: boolean }) => {
 
             <header role="banner" className="z-50" key={location}>
                 <nav
-                    className="w-full bg-white    border-gray-50  z-50"
+                    className="w-full bg-white border-gray-50  z-50"
                     role="navigation"
                     aria-label="Main navigation z-50 "
                 >

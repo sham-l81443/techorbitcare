@@ -323,7 +323,7 @@ export const UserDashboard = () => {
       <HeroBackground />
       <div className="container mx-auto px-4 py-8 relative z-10">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8 h-12 gap-x-4">
+          <TabsList className="w-full mb-8 h-12 overflow-x-auto scrollbar-hide lg:grid lg:grid-cols-4 justify-start flex gap-x-4">
             <TabsTrigger value="home" className="flex items-center gap-2 text-sm font-medium py-2 hover:bg-gray-200 hover:scale-105 cursor-pointer transition-all duration-200 rounded-md">
               <Home className="h-4 w-4" />
               Home

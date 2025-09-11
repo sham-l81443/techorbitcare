@@ -181,9 +181,8 @@ export const AdminDashboard = () => {
             <HeroBackground className='from-blue-800 to-blue-800/40' />
             <div className="container mx-auto px-4 py-8 relative z-10 h-full overflow-hidden flex-1 flex flex-col">
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex h-full flex-col overflow-hidden">
-                    <TabsList className="w-full mb-8 h-12 overflow-x-auto scrollbar-hide">
-                        <div className="flex items-center gap-x-4 min-w-max px-1">
-                            <TabsTrigger value="overview" className="flex items-center gap-2 text-sm font-medium py-2 px-4 min-w-max hover:bg-gray-200 hover:scale-105 cursor-pointer transition-all duration-200 rounded-md">
+                    <TabsList className="w-full mb-8 h-12 overflow-x-auto scrollbar-hide lg:grid lg:grid-cols-4 justify-start flex gap-x-4">
+                            <TabsTrigger value="overview" className="whitespace-nowrap flex items-center gap-2 text-sm font-medium py-2 px-4 min-w-max hover:bg-gray-200 hover:scale-105 cursor-pointer transition-all duration-200 rounded-md">
                                 <Home className="h-4 w-4" />
                                 Overview
                             </TabsTrigger>
@@ -199,7 +198,6 @@ export const AdminDashboard = () => {
                                 <Settings className="h-4 w-4" />
                                 Settings
                             </TabsTrigger>
-                        </div>
                     </TabsList>
 
                     <TabsContent value="overview" className="flex-1 overflow-y-auto">
