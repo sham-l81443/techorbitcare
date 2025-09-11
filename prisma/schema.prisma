@@ -50,6 +50,12 @@ model User {
   // OTP fields for email verification
   otpCode     String?
   otpExpires  DateTime?
+  
+  // Password reset fields
+  resetToken     String?
+  resetExpires   DateTime?
+  resetAttempts  Int      @default(0)
+  lastResetAttempt DateTime?
 
   @@map("users")
   @@index([email])
