@@ -19,6 +19,7 @@ import {
 import { Eye, EyeOff } from 'lucide-react';
 import { useSignup } from '@/hooks/useAuth';
 import { useAuthStore } from '@/hooks/useAuthStore';
+import { GoogleLoginButton } from '@/components/auth/GoogleLoginButton';
 
 const commonClass = "bg-gradient-to-r from-blue-500 to-blue-500/40 absolute -z-10 rounded-4xl";
 const mobileClass = "h-[500px] w-[400px] -top-[100px] -right-[150px] rotate-[-150deg] rounded-4xl";
@@ -312,6 +313,19 @@ export default function SignupPage() {
                                         >
                                             {signupMutation.isPending ? 'Creating Account...' : 'Create Account'}
                                         </Button>
+                                        
+                                        {/* Divider */}
+                                        <div className="relative my-6">
+                                            <div className="absolute inset-0 flex items-center">
+                                                <div className="w-full border-t border-gray-300" />
+                                            </div>
+                                            <div className="relative flex justify-center text-sm">
+                                                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Google Login Button */}
+                                        <GoogleLoginButton isLoading={signupMutation.isPending} />
                                         
                                         <div className="text-center">
                                             <p className="text-sm text-gray-600">
