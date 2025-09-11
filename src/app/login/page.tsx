@@ -17,8 +17,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Eye, EyeOff } from 'lucide-react';
-import { useLogin } from '@/hooks/useAuth';
-import { useAuthStore } from '@/hooks/useAuthStore';
+import { useNextAuth } from '@/hooks/useNextAuth';
 
 const commonClass = "bg-gradient-to-r from-blue-500 to-blue-500/40 absolute -z-10 rounded-4xl";
 const mobileClass = "h-[500px] w-[400px] -top-[100px] -right-[150px] rotate-[-150deg] rounded-4xl";
@@ -55,9 +54,9 @@ const LoginBackground = () => {
 export default function LoginPage() {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
-    const { isAuthenticated } = useAuthStore();
-    
-    const loginMutation = useLogin();
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const { isAuthenticated, signIn } = useNextAuth();
 
     // Redirect to dashboard if already authenticated
     React.useEffect(() => {
@@ -75,13 +74,27 @@ export default function LoginPage() {
         },
     });
 
-    const onSubmit = (data: LoginFormData) => {
-        loginMutation.mutate(data, {
-            onSuccess: () => {
-                // Redirect to dashboard on successful login
+    const onSubmit = async (data: LoginFormData) => {
+        setIsLoading(true);
+        setError(null);
+        
+        try {
+            const result = await signIn('credentials', {
+                email: data.email,
+                password: data.password,
+                redirect: false,
+            });
+            
+            if (result?.error) {
+                setError('Invalid email or password');
+            } else if (result?.ok) {
                 router.push('/dashboard');
-            },
-        });
+            }
+        } catch (err) {
+            setError('An error occurred. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -190,12 +203,18 @@ export default function LoginPage() {
                                             </Link>
                                         </div>
                                         
+                                        {error && (
+                                            <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-md">
+                                                {error}
+                                            </div>
+                                        )}
+                                        
                                         <Button 
                                             type="submit" 
-                                            disabled={loginMutation.isPending}
+                                            disabled={isLoading}
                                             className="w-full h-12 text-base font-medium bg-black hover:bg-gray-800 text-white disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
-                                            {loginMutation.isPending ? 'Signing In...' : 'Sign In'}
+                                            {isLoading ? 'Signing In...' : 'Sign In'}
                                         </Button>
                                         
                                         <div className="text-center">

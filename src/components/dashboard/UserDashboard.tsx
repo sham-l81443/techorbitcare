@@ -319,7 +319,7 @@ export const UserDashboard = () => {
   return (
     <div className="min-h-screen relative overflow-x-hidden">
       {/* Hero Background */}
-      <Navbar isLoggedIn={true} />
+      <Navbar/>
       <HeroBackground />
       <div className="container mx-auto px-4 py-8 relative z-10">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

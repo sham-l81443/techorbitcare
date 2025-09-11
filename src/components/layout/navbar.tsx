@@ -22,7 +22,7 @@ import {
 import Applogo from "@/assets/images/app-logo.png";
 import Image from "next/image";
 import { GoogleMapsIcon, Whatsapp } from "@/assets/svg";
-import { useAuth } from "@/contexts/AuthContext";
+import { useNextAuth } from "@/hooks/useNextAuth";
 import { toast } from 'sonner';
 
 // VisuallyHidden component for accessibility
@@ -120,10 +120,10 @@ const NavbarNavigation = ({ navigation, isActive }: { navigation: NavigationItem
 
 // Action buttons component for desktop
 const NavbarActions = ({ actionButtons }: { actionButtons: ActionButton[] }) => {
-    const { user, logout } = useAuth();
+    const { user, signOut } = useNextAuth();
 
-    const handleLogout = () => {
-        logout();
+    const handleLogout = async () => {
+        await signOut({ redirect: false });
         toast.success('Logged out successfully!');
     };
 
@@ -172,7 +172,7 @@ const NavbarActions = ({ actionButtons }: { actionButtons: ActionButton[] }) => 
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
 
-                        {user?.role === 'ADMIN' ? (
+                        {(user as any)?.role === 'ADMIN' ? (
                             <DropdownMenuItem asChild>
                                 <Link href="/dashboard" className="flex items-center">
                                     <LayoutDashboard className="w-4 h-4 mr-2" />
@@ -232,10 +232,10 @@ const CallNow = () => {
 
 // Mobile navigation drawer component
 const NavbarMobile = ({ navigation, actionButtons, isActive }: { navigation: NavigationItem[], actionButtons: ActionButton[], isActive: (path: string) => boolean }) => {
-    const { user, logout } = useAuth();
+    const { user, signOut } = useNextAuth();
 
-    const handleLogout = () => {
-        logout();
+    const handleLogout = async () => {
+        await signOut({ redirect: false });
         toast.success('Logged out successfully!');
     };
 
@@ -315,7 +315,7 @@ const NavbarMobile = ({ navigation, actionButtons, isActive }: { navigation: Nav
                                             My Coupons
                                         </Link>
                                     </DrawerClose> */}
-                                    {user?.role === 'ADMIN' ? (
+                                    {(user as any)?.role === 'ADMIN' ? (
                                         <DrawerClose asChild>
                                             <Link
                                                 href="/dashboard"
@@ -535,8 +535,9 @@ const NavbarStructuredData = ({ businessInfo }: { businessInfo: BusinessInfo }) 
     );
 };
 
-const Navbar = ({ isLoggedIn = false }: { isLoggedIn: boolean }) => {
+const Navbar = () => {
     const location = usePathname();
+    const { isAuthenticated } = useNextAuth();
 
     const navigation = [
         {
@@ -644,7 +645,7 @@ const Navbar = ({ isLoggedIn = false }: { isLoggedIn: boolean }) => {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between items-center h-12 ">
                             <NavbarLogo />
-                            {!isLoggedIn && <NavbarNavigation navigation={navigation} isActive={isActive} />}
+                            {!isAuthenticated && <NavbarNavigation navigation={navigation} isActive={isActive} />}
                             <NavbarActions actionButtons={actionButtons} />
                             <NavbarMobile navigation={navigation} actionButtons={actionButtons} isActive={isActive} />
                         </div>

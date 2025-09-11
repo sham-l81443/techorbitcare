@@ -177,7 +177,7 @@ export const AdminDashboard = () => {
     return (
         <div className="h-screen relative flex flex-col overflow-hidden">
             {/* Hero Background */}
-            <Navbar isLoggedIn={true} />
+            <Navbar />
             <HeroBackground className='from-blue-800 to-blue-800/40' />
             <div className="container mx-auto px-4 py-8 relative z-10 h-full overflow-hidden flex-1 flex flex-col">
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex h-full flex-col overflow-hidden">

@@ -8,6 +8,7 @@ import GoogleAnalytics from "@/components/google-analytics";
 import PerformanceOptimizer from "@/components/performance-optimizer";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { QueryProvider } from "@/components/providers/QueryProvider";
+import { SessionProvider } from "@/components/providers/SessionProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -129,15 +130,17 @@ export default function RootLayout({
         className={`${inter.variable} ${poppins.variable} antialiased`}
       >
         <QueryProvider>
-          <AuthProvider>
-            <GoogleAnalytics GA_TRACKING_ID={process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'} />
-            <StructuredData type="localBusiness" />
-            <StructuredData type="organization" />
-            {children}
-            <ServiceWorkerRegistration />
-            {/* <PWAStatusIndicator /> */}
-            <PWAInstallPrompt />
-          </AuthProvider>
+          <SessionProvider>
+            <AuthProvider>
+              <GoogleAnalytics GA_TRACKING_ID={process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'} />
+              <StructuredData type="localBusiness" />
+              <StructuredData type="organization" />
+              {children}
+              <ServiceWorkerRegistration />
+              {/* <PWAStatusIndicator /> */}
+              <PWAInstallPrompt />
+            </AuthProvider>
+          </SessionProvider>
         </QueryProvider>
       </body>
     </html>
