@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack --port 3002",
     "build": "next build --turbopack",
-    "start": "next start --port 3002",
+    "start": "next start --port 5000",
     "lint": "eslint",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
@@ -58,6 +58,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
+    "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "jsonwebtoken": "^9.0.2",

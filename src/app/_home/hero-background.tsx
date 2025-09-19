@@ -1,6 +1,6 @@
-const commonClass = "bg-gradient-to-r from-blue-500 to-blue-500/40 absolute -z-10 rounded-4xl"
-const mobileClass = "h-[500px] w-[400px]  -top-[100px] -right-[150px] rotate-[-150deg] rounded-4xl"
-const desktopClass = "lg:h-[1000px] lg:w-[1000px]  lg:-top-[400px] lg:-right-[300px] lg:rotate-[-150deg]"
+const commonClass = "bg-gradient-to-r from-blue-400 to-blue-100 absolute -z-10 rounded-4xl"
+const mobileClass = "h-[500px] w-[400px]  top-[100px] -right-[150px] rotate-[-150deg] rounded-4xl"
+const desktopClass = "lg:h-[1000px] lg:w-[1000px]  lg:top-[400px] lg:-right-[300px] lg:rotate-[-150deg]"
 
 
 export const HeroBackground = ({className}: {className?: string}) => {
